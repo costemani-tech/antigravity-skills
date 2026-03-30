@@ -1,35 +1,42 @@
-### 🧠 costemani-tech: Global Agentic Framework (v2.0)
+1. CAPACIDADES AGÊNTICAS E MULTIMODAIS
 
-**Dono:** Vinicius (costemani-tech)
-**OBJETIVO:** Cérebro de instruções global para todos os projetos (Meu Plantão, Bolão, Dívidas). Atuar como Agente Executor Autônomo utilizando padrões oficiais google-gemini.
+Agent Skills: Utilize 'Function Calling' para validar o estado do banco (Supabase) antes de qualquer alteração. Atue como Agente Executor (Automação de tabelas e RLS).
+GenAI Processors: Capacidade de converter fotos de escalas físicas ou PDFs em JSON estruturado para o banco de dados (Exclusivo Plano Pro).
 
----
+2. SEGURANÇA E PRIVACIDADE (APPSEC - Score 91)
+Isolamento RLS: Regra obrigatória em TODA tabela: (SELECT auth.uid()) = user_id.
+Auth: Priorize Login por E-mail (OTP/Magic Link) para eliminar gestão de senhas.
+Service Role: Chaves administrativas (service_role) são estritamente Server-Side. Nunca expor no Client/Frontend.
 
-### 1. CAPACIDADES AGÊNTICAS (AGENT SKILLS)
-* **Documentação Base:** https://developers.googleblog.com/closing-the-knowledge-gap-with-agent-skills/
-* **Function Calling:** Estruture a lógica como "Tools". O Agente deve validar o estado atual do banco antes de propor alterações.
-* **Agente Executor:** Automatize criação de tabelas, configuração de RLS e validação de deploy sempre que possível.
+3. LÓGICA DE NEGÓCIO: REALIDADE DE ESCALAS
+Gestão de Duplicidade: Nunca bloqueie sobreposições. Ao detectar choque de horário, exiba o Alerta Amarelo de "Confirmar Duplicidade".
+Status de Conflito: Registre status_conflito: true para sinalização visual passiva no calendário.
+Preservação de Histórico: Ofereça a opção "Encerrar Escala na Data X", deletando apenas plantões futuros (>= data) e mantendo o histórico trabalhado para controle financeiro.
 
-### 2. PADRÃO DE SEGURANÇA (BANCO DE DADOS)
-* **Auth:** Priorize sempre Login por E-mail (OTP/Magic Link) para eliminar a gestão de senhas.
-* **Row Level Security (RLS):** Toda tabela deve ser blindada. Regra obrigatória: `(SELECT auth.uid()) = user_id`.
-* **Menor Privilégio:** Chaves 'service_role' são estritamente Server-Side. Nunca expor no Front-end.
+4. UX ACESSÍVEL E CALENDÁRIO (VISUAL)
 
-### 3. PROCESSAMENTO MULTIMODAL (GENAI PROCESSORS)
-* **Extração de Dados:** Utilize a lógica de 'google-gemini/genai-processors' para converter fotos de escalas, comprovantes ou PDFs em JSON estruturado para o banco de dados.
-* **Validação de Visão:** Ao processar imagens, confirme campos críticos com o usuário antes de salvar.
+Pintura Total (Full Background): Dias com plantão devem ter o fundo preenchido com a cor do hospital para facilitar a leitura em telas pequenas.
+Lógica Noturna (Diagonal): Plantões que cruzam a meia-noite (ex: 19h-07h) devem usar divisão diagonal via CSS linear-gradient.
+Início: Metade inferior direita pintada.
+Término: Metade superior esquerda pintada no dia seguinte.
+Sinalização de Conflito: Dias com duplicidade confirmada exibem um indicador visual (ex: bolinha âmbar 🟡 ou borda amarela).
 
-### 4. LÓGICA DE NEGÓCIO E RESILIÊNCIA (COOKBOOK STANDARDS)
-* **Tratamento de Conflitos:** Siga o padrão 'google-gemini/cookbook'. Nunca bloqueie o usuário. Para sobreposições, ofereça alertas (ex: 'Plantão Pago' ou 'Troca').
-* **Offline-First:** Implemente cache local (localStorage/SWR). Se o sinal falhar, enfileire a ação e sincronize no reestabelecimento.
+5. REGRAS DE MONETIZAÇÃO (FREE VS PRO)
+Limites Free: * Máximo de 2 Locais de Trabalho.
+Máximo de 4 Plantões Extras por mês.
+Alarmes: Escolha de horário livre (disponível no Free).
+Paywall Pro (Acesso Restrito):
+Edição de plantões já cadastrados.
+Controle Financeiro completo (Saldo e lançamentos).
+Compartilhamento de Agenda (Token familiar/leitura).
+Exportação de Relatório: Apenas via PDF (Remover opção Excel).
 
-### 5. PADRÕES DE UX E USABILIDADE (MOBILE-FIRST)
-* **Toque no Celular:** Botões e áreas clicáveis devem ter no mínimo 44px de altura/largura.
+6. PROTOCOLO DE AUDITORIA E BLINDAGEM (PENTEST)
 
-### 🛡️ 6. PROTOCOLO DE AUDITORIA E BLINDAGEM (APPSEC)
-* **Zero-Exposure:** Proibido expor API Keys, Secrets ou arquivos `.env` no frontend ou commits. Use variáveis de ambiente na Vercel/Supabase.
-* **Sanitização Universal:** Todo input (campos, URLs, queryParams) deve ser tratado como "não confiável". Use queries parametrizadas (ORMs) para impedir SQL Injection e escape de caracteres para evitar XSS.
-* **Validação Server-Side:** Nunca confie apenas na trava da interface (frontend). Toda ação sensível (Delete/Update/Pagamento) deve validar permissão e ID do usuário no servidor antes de executar.
+Sanitização Universal: Trate todo input como "não confiável". Use queries parametrizadas e escape de caracteres (XSS).
+Hardening de Erros: Proibido repassar erros crus do banco (Postgres/Supabase) para o cliente. Use mensagens amigáveis e códigos (error + code). Logs técnicos ficam apenas no servidor (console.error).
+Leak Check: Impedir exposição de arquivos .env ou secrets no GitHub através de .gitignore rigoroso.
+Validação Server-Side: Toda ação sensível (Delete/Pagamento) deve validar permissão e ID do usuário no servidor antes de executar.
 * **Rate Limiting & Integridade:** Implemente proteção contra força bruta (limite de requests) e garanta idempotência em ações financeiras (evitar cobrança duplicada por clique duplo).
 * **Hardening de Erros:** Erros enviados ao frontend devem ser genéricos (ex: "Algo deu errado"). Nunca exponha stack traces, nomes de tabelas ou detalhes internos do servidor.
 * **Leak Check:** Verifique se o `.gitignore` contém `.env`, `node_modules` e pastas de build antes de qualquer push público.
