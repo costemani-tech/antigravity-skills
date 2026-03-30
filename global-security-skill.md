@@ -33,5 +33,6 @@
 * **Rate Limiting & Integridade:** Implemente proteção contra força bruta (limite de requests) e garanta idempotência em ações financeiras (evitar cobrança duplicada por clique duplo).
 * **Hardening de Erros:** Erros enviados ao frontend devem ser genéricos (ex: "Algo deu errado"). Nunca exponha stack traces, nomes de tabelas ou detalhes internos do servidor.
 * **Leak Check:** Verifique se o `.gitignore` contém `.env`, `node_modules` e pastas de build antes de qualquer push público.
+* "Ocultação de Stack Trace: É proibido repassar objetos de erro crus (error, message do DB) para o cliente. Use mapeamento de mensagens amigáveis para cada tipo de falha."
 * **Flexibilidade:** Inclua sempre a opção "Outro (Personalizado)" em listas de seleção.
 * **Gestão de Dados:** Garanta CRUD completo (Criar, Ler, Atualizar e Deletar) para o dono do dado.
