@@ -14,13 +14,12 @@ Status de Conflito: Registre status_conflito: true para sinalização visual pas
 Preservação de Histórico: Ofereça a opção "Encerrar Escala na Data X", deletando apenas plantões futuros (>= data) e mantendo o histórico trabalhado para controle financeiro.
 
 4. UX ACESSÍVEL E CALENDÁRIO (VISUAL)
-
-Pintura Total (Full Background): Dias com plantão devem ter o fundo preenchido com a cor do hospital para facilitar a leitura em telas pequenas.
-Lógica Noturna (Diagonal): Plantões que cruzam a meia-noite (ex: 19h-07h) devem usar divisão diagonal via CSS linear-gradient.
-Início: Metade inferior direita pintada.
-Término: Metade superior esquerda pintada no dia seguinte.
-Sinalização de Conflito: Dias com duplicidade confirmada exibem um indicador visual (ex: bolinha âmbar 🟡 ou borda amarela).
-
+* **Pintura Total:** Fundo preenchido com a cor do hospital.
+* **Lógica Noturna (Meio a Meio Vertical):** Plantões que cruzam a meia-noite usam divisão vertical (`to right`).
+    * Início do Plantão (ex: 19h): Lado esquerdo transparente, lado direito pintado.
+    * Término do Plantão (ex: 07h): Lado esquerdo pintado, lado direito transparente.
+* **Múltiplos Plantões:** Se houver um diurno e um noturno, o lado esquerdo mostra a cor do dia e o direito a cor do início da noite.
+* **Conflitos:** Se houver sobreposição total no mesmo horário, manter a cor e destacar com **Borda Âmbar 2px**.
 5. REGRAS DE MONETIZAÇÃO (FREE VS PRO)
 Limites Free: * Máximo de 2 Locais de Trabalho.
 Máximo de 4 Plantões Extras por mês.
