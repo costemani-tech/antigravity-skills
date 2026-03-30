@@ -14,21 +14,29 @@ Status de Conflito: Registre status_conflito: true para sinalização visual pas
 Preservação de Histórico: Ofereça a opção "Encerrar Escala na Data X", deletando apenas plantões futuros (>= data) e mantendo o histórico trabalhado para controle financeiro.
 
 4. UX ACESSÍVEL E CALENDÁRIO (VISUAL)
-* **Pintura Total:** Fundo preenchido com a cor do hospital.
-* **Lógica Noturna (Meio a Meio Vertical):** Plantões que cruzam a meia-noite usam divisão vertical (`to right`).
-    * Início do Plantão (ex: 19h): Lado esquerdo transparente, lado direito pintado.
-    * Término do Plantão (ex: 07h): Lado esquerdo pintado, lado direito transparente.
-* **Múltiplos Plantões:** Se houver um diurno e um noturno, o lado esquerdo mostra a cor do dia e o direito a cor do início da noite.
-* **Conflitos:** Se houver sobreposição total no mesmo horário, manter a cor e destacar com **Borda Âmbar 2px**.
+
+Pintura Total: Fundo preenchido com a cor sólida do hospital (Full Background) para acessibilidade.
+Lógica Noturna (Meio a Meio Vertical): Plantões que cruzam a meia-noite usam divisão horizontal (to right).
+Início (ex: 19h): metade transparente, metade colorido.
+Término (ex: 07h): metade colorido, metadetransparente.
+Múltiplos Plantões: Se houver um diurno e um noturno no mesmo dia, metade a cor do dia e a outra metade a cor do início da noite.
+Conflitos: Sobreposição total no mesmo horário mantém a cor original e destaca com Borda Âmbar 2px.
+Alertas WhatsApp (Pro): Permite configurar o tempo de antecedência (ex: 30min, 1h, 3h antes) para a notificação.
+
 5. REGRAS DE MONETIZAÇÃO (FREE VS PRO)
-Limites Free: * Máximo de 2 Locais de Trabalho.
-Máximo de 4 Plantões Extras por mês.
-Alarmes: Escolha de horário livre (disponível no Free).
-Paywall Pro (Acesso Restrito):
-Edição de plantões já cadastrados.
-Controle Financeiro completo (Saldo e lançamentos).
-Compartilhamento de Agenda (Token familiar/leitura).
-Exportação de Relatório: Apenas via PDF (Remover opção Excel).
+
+Limites Free (Gratuito):
+Locais de Trabalho: Máximo de 2 locais.
+Plantões Extras: Máximo de 4 por mês.
+Alarmes: Escolha de horário livre de lembrete (via Push).
+
+Paywall Pro (Assinatura):
+Extras Ilimitados: Remoção da trava de 4 plantões extras/mês.
+Edição Completa: Permite editar horários e locais de plantões já salvos.
+Gestão Financeira de Extras: Lançamento de valores e opção de "Dinheiro vs. Folga".
+Alertas WhatsApp: Notificações automáticas com tempo personalizável.
+PDF Profissional: Exportação de Relatório Detalhado com Dashboard Visual e Gráficos (sem opção Excel).
+Link de Visualização Familiar: Token de leitura seguro ("Onde estou hoje") para compartilhar com a família.
 
 6. PROTOCOLO DE AUDITORIA E BLINDAGEM (PENTEST)
 
