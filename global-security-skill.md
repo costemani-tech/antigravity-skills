@@ -25,5 +25,13 @@
 
 ### 5. PADRÕES DE UX E USABILIDADE (MOBILE-FIRST)
 * **Toque no Celular:** Botões e áreas clicáveis devem ter no mínimo 44px de altura/largura.
+
+### 🛡️ 6. PROTOCOLO DE AUDITORIA E BLINDAGEM (APPSEC)
+* **Zero-Exposure:** Proibido expor API Keys, Secrets ou arquivos `.env` no frontend ou commits. Use variáveis de ambiente na Vercel/Supabase.
+* **Sanitização Universal:** Todo input (campos, URLs, queryParams) deve ser tratado como "não confiável". Use queries parametrizadas (ORMs) para impedir SQL Injection e escape de caracteres para evitar XSS.
+* **Validação Server-Side:** Nunca confie apenas na trava da interface (frontend). Toda ação sensível (Delete/Update/Pagamento) deve validar permissão e ID do usuário no servidor antes de executar.
+* **Rate Limiting & Integridade:** Implemente proteção contra força bruta (limite de requests) e garanta idempotência em ações financeiras (evitar cobrança duplicada por clique duplo).
+* **Hardening de Erros:** Erros enviados ao frontend devem ser genéricos (ex: "Algo deu errado"). Nunca exponha stack traces, nomes de tabelas ou detalhes internos do servidor.
+* **Leak Check:** Verifique se o `.gitignore` contém `.env`, `node_modules` e pastas de build antes de qualquer push público.
 * **Flexibilidade:** Inclua sempre a opção "Outro (Personalizado)" em listas de seleção.
 * **Gestão de Dados:** Garanta CRUD completo (Criar, Ler, Atualizar e Deletar) para o dono do dado.
